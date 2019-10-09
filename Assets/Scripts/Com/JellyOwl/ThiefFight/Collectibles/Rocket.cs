@@ -11,8 +11,7 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
 
         protected Action DoAction;
         [Header("Movement")]
-        [SerializeField]
-        protected float speed;
+        protected float speed = 1000;
 
         protected override void Start()
         {
@@ -38,7 +37,7 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
         protected void DoActionLaunch()
         {
             rb.useGravity = false;
-            rb.position += transform.forward * speed * Time.deltaTime;
+            rb.velocity = transform.forward * speed * Time.deltaTime;
 
         }
 
