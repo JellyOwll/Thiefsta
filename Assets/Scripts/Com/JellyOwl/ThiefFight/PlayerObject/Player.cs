@@ -80,6 +80,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
         protected ParticleSystem particleStun;
         [NonSerialized]
         public bool isKilled;
+        [SerializeField]
+        protected ObjectiveArrow objectiveArrow;
 
         // Start is called before the first frame update
         void Start()
@@ -90,6 +92,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             playersList.Add(this);
             players.Add(transform);
             isKilled = false;
+            objectiveArrow.CheckArrow();
             controller = new Controller(PlayerNumber);
             if (GameManager.Instance.mode == DeathMatch.DeathMatch.ToString())
             {

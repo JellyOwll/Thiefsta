@@ -280,6 +280,7 @@ MonoBehaviour:
   particleRun: {fileID: 1024952285251016156}
   particleHit: {fileID: 376391785}
   particleStun: {fileID: 4523619564703871442}
+  objectiveArrow: {fileID: 4427357179899649973}
 --- !u!1 &2234409608865004011
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +526,7 @@ GameObject:
   - component: {fileID: 5137051997670060166}
   - component: {fileID: 3402903106631296245}
   - component: {fileID: 1100726576240349203}
+  - component: {fileID: 4427357179899649973}
   m_Layer: 5
   m_Name: ObjectiveArrowCanvas
   m_TagString: Untagged
@@ -612,6 +614,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4427357179899649973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5331623286059491580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23baf4da4437a6c43a8a61e05d43d31f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveArrowPivot: {fileID: 3854689865334561056}
 --- !u!1001 &390158253
 PrefabInstance:
   m_ObjectHideFlags: 0
