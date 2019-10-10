@@ -201,13 +201,9 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             {
                 velocity = slowWalk;
             }
-            else if (slowObjective)
-            {
-                velocity = walk * ratioWalk;
-            }
             else
             {
-                velocity = walk;
+                velocity = slowObjective ? walk * ratioWalk : walk;
             }
         }
 
@@ -266,6 +262,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             }
             handfull = false;
             slowObjective = false;
+            objectiveArrow.Followtruck = false;
+
         }
 
         private void Pick()
@@ -281,6 +279,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
                     if (CollectableObject[i].GetComponent<Collectible>().isObjective)
                     {
                         slowObjective = true;
+                        objectiveArrow.Followtruck = true;
                     }
                     CollectableObject[i].GetComponent<Collectible>().LastPlayer = PlayerNumber;
                     CollectableObject.Remove(CollectableObject[i]);
@@ -313,6 +312,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             handfull = false;
             isThrowing = true;
             slowObjective = false;
+            objectiveArrow.Followtruck = false;
+
         }
 
         private void FixedUpdate()

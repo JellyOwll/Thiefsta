@@ -16,7 +16,7 @@ namespace Com.JellyOwl.ThiefFight.ObjectiveObject {
     public class Objective : Collectible {
         public static List<GameObject> objectives = new List<GameObject>();
         public static Objective currentObjective;
-        static protected Objective instance;
+        protected static Objective instance;
         public CinemachineVirtualCamera virtualCamera;
         [SerializeField]
         protected GameObject effect;

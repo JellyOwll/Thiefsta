@@ -4,7 +4,9 @@
 ///-----------------------------------------------------------------
 
 using Com.JellyOwl.ThiefFight.Managers;
+using Com.JellyOwl.ThiefFight.ObjectiveObject;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
@@ -12,30 +14,58 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         [SerializeField]
         protected Transform objectiveArrowPivot;
-        private void Start() {
+        [SerializeField]
+        protected Image arrowGraphic;
+        protected bool followtruck;
+        [SerializeField]
+        protected float objectiveArrowPlayer;
 
+
+        private void Start() {
+            objectiveArrowPlayer = GetComponentInParent<Player>().PlayerNumber;
         }
 
         private void Update() {
             
         }
+        public bool Followtruck { 
+            get => followtruck;
+            set => followtruck = value;
+        }
 
         public void CheckArrow()
         {
-            if(GameManager.Instance.mode == BestOfThieves.BestOfThieves.ToString())
+            if (GameManager.Instance.mode == BestOfThieves.BestOfThieves.ToString())
             {
-                gameObject.SetActive(true);
+                arrowGraphic.enabled = true;
                 Debug.Log("Best");
             } else
             {
-                gameObject.SetActive(false);
+                arrowGraphic.enabled = false;
                 Debug.Log("No");
+                
             }
         }
 
         private void LateUpdate()
         {
-            
+            if (Objective.currentObjective is null)
+            {
+                arrowGraphic.enabled = false;
+
+            }
+            else
+            {
+                arrowGraphic.enabled = true;
+                if (followtruck)
+                {
+
+                } else
+                {
+                    objectiveArrowPivot.LookAt(Objective.currentObjective.gameObject.transform.position);
+
+                }
+            }
         }
     }
 }
