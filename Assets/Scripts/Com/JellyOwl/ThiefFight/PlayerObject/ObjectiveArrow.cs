@@ -57,12 +57,21 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             else
             {
                 arrowGraphic.enabled = true;
-                if (followtruck)
+                if(Followtruck)
                 {
-
+                    for (int i = PlayerZone.playerZoneList.Count - 1; i >= 0; i--)
+                    {
+                        if (PlayerZone.playerZoneList[i].playerNumber == objectiveArrowPlayer)
+                        {
+                            objectiveArrowPivot.LookAt(PlayerZone.playerZoneList[i].transform.position);
+                            Debug.Log("PlayerZone: " + PlayerZone.playerZoneList[i].transform.position);
+                            Debug.Log("Objective: " + Objective.currentObjective.transform.position);
+                            break;
+                        }
+                    }
                 } else
                 {
-                    objectiveArrowPivot.LookAt(Objective.currentObjective.gameObject.transform.position);
+                    objectiveArrowPivot.LookAt(Objective.currentObjective.transform.position);
 
                 }
             }
