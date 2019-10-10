@@ -80,6 +80,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
         protected ParticleSystem particleStun;
         [NonSerialized]
         public bool isKilled;
+        [SerializeField]
+        protected ObjectiveArrow objectiveArrow;
 
         // Start is called before the first frame update
         void Start()
@@ -90,6 +92,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             playersList.Add(this);
             players.Add(transform);
             isKilled = false;
+            objectiveArrow.CheckArrow();
             controller = new Controller(PlayerNumber);
             if (GameManager.Instance.mode == DeathMatch.DeathMatch.ToString())
             {
@@ -198,13 +201,9 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             {
                 velocity = slowWalk;
             }
-            else if (slowObjective)
-            {
-                velocity = walk * ratioWalk;
-            }
             else
             {
-                velocity = walk;
+                velocity = slowObjective ? walk * ratioWalk : walk;
             }
         }
 
@@ -263,6 +262,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             }
             handfull = false;
             slowObjective = false;
+            objectiveArrow.Followtruck = false;
+
         }
 
         private void Pick()
@@ -278,6 +279,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
                     if (CollectableObject[i].GetComponent<Collectible>().isObjective)
                     {
                         slowObjective = true;
+                        objectiveArrow.Followtruck = true;
                     }
                     CollectableObject[i].GetComponent<Collectible>().LastPlayer = PlayerNumber;
                     CollectableObject.Remove(CollectableObject[i]);
@@ -310,6 +312,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject
             handfull = false;
             isThrowing = true;
             slowObjective = false;
+            objectiveArrow.Followtruck = false;
+
         }
 
         private void FixedUpdate()

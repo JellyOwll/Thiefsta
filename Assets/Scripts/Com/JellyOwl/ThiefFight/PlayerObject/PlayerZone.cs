@@ -9,19 +9,21 @@ using Com.JellyOwl.ThiefFight.Menus;
 using Com.JellyOwl.ThiefFight.ObjectiveObject;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Com.JellyOwl.ThiefFight.PlayerObject {
 	public class PlayerZone : MonoBehaviour {
 
         [SerializeField]
-        protected int playerNumber;
+        public int playerNumber;
 
         [SerializeField]
         protected ParticleSystem particleExplosion;
+        public static List<PlayerZone> playerZoneList = new List<PlayerZone>();
 
         private void Start () {
-			
+            playerZoneList.Add(this);
 		}
 		
 		private void Update () {
@@ -56,6 +58,11 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             particleExplosion.Play();
             GameManager.Instance.IncrementScore(playerNumber, objective.GetComponent<Collectible>().score);
             Destroy(objective);
+        }
+
+        protected void OnDestroy()
+        {
+            playerZoneList.Remove(this);
         }
     }
 }
