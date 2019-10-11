@@ -12,7 +12,6 @@ using Com.JellyOwl.ThiefFight.Collectibles;
 
 namespace Com.JellyOwl.ThiefFight.ObjectiveObject {
 
-
     public class Objective : Collectible {
         public static List<GameObject> objectives = new List<GameObject>();
         public static Objective currentObjective;
