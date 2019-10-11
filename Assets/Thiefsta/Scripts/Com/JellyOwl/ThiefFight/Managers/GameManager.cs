@@ -25,7 +25,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
     enum BestOfThieves
     {
         BestOfThieves,
-        TIMEMODE = 5
+        TIMEMODE = 180
     }
 
     enum DeathMatch
