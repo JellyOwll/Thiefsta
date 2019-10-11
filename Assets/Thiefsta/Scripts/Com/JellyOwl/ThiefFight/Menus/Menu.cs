@@ -56,7 +56,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
                 lCouchParty.anchoredPosition = new Vector2(-500, lCouchParty.anchoredPosition.y);
                 lOption.anchoredPosition = new Vector2(-500, lOption.anchoredPosition.y);
                 lQuit.anchoredPosition = new Vector2(-500, lQuit.anchoredPosition.y);
-                Debug.Log("coucou");
+                
                 Tween.AnchoredPosition(lCouchParty, new Vector3(lCouchIniX, lCouchParty.anchoredPosition.y), .75f, delay, Tween.EaseOutBack);
                 delay += .2f;
                 Tween.AnchoredPosition(lOption, new Vector3(lOptionIniX, lOption.anchoredPosition.y), .75f, delay, Tween.EaseOutBack);
@@ -84,7 +84,6 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
         public void OptionMenu()
         {
-            Debug.Log("Test");
             ResetEventSystem();
             Destroy(gameObject);
             MenuManager.Instance.GoToOption();
@@ -93,7 +92,6 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         public void CouchPartyBtn()
         {
             TransitionManager.Instance.MenuTransition(CouchPartyMenu);
-
         }
 
         protected void CouchPartyMenu()
@@ -103,7 +101,8 @@ namespace Com.JellyOwl.ThiefFight.Menus {
             MenuManager.Instance.GoToCouchParty();
         }
 
-        private void OnDestroy(){
+        private void OnDestroy()
+        {
 			if (this == instance) instance = null;
 		}
 	}

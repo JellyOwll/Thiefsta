@@ -50,7 +50,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         {
             float delay = 0;
             GetComponent<RectTransform>().anchoredPosition += new Vector2(GetComponent<RectTransform>().rect.width, 0);
-            Tween.AnchoredPosition(GetComponent<RectTransform>(), Vector3.right * 0, 1f, delay, Tween.EaseInOutBack, Tween.LoopType.None);
+            Tween.AnchoredPosition(GetComponent<RectTransform>(), Vector3.right * 0, 0.7f, delay, Tween.EaseInOutBack, Tween.LoopType.None);
 
         }
         private void Update()
