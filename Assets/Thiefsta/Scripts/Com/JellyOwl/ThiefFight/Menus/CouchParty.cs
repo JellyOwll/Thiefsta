@@ -94,7 +94,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         public void LeftTransition(Action action)
         {
             float delay = 0;
-            Tween.AnchoredPosition(GetComponent<RectTransform>(), Vector3.right * -GetComponent<RectTransform>().rect.width, 1f, delay, Tween.EaseInOutBack, Tween.LoopType.None, null, () => action());
+            Tween.AnchoredPosition(GetComponent<RectTransform>(), Vector3.right * -GetComponent<RectTransform>().rect.width, 0.7f, delay, Tween.EaseInOutBack, Tween.LoopType.None, null, () => action());
         }
 
         private void OnDestroy(){
