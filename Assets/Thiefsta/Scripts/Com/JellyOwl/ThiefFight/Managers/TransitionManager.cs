@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 //using DG.Tweening;
+using Pixelplacement;
 using System;
 using UnityEngine;
 
@@ -30,14 +31,19 @@ namespace Com.JellyOwl.ThiefFight.Managers {
 
         private void Start()
         {
-            //DOTween.Init();
             botY = bottomTransition.anchoredPosition.y;
             upY = upTransition.anchoredPosition.y;
         }
 
-        /*public void MenuTransition()
+        public void MenuTransition()
         {
-            Sequence mySequence = DOTween.Sequence();
+            float delay = 0;
+            Tween.AnchoredPosition(upTransition, Vector3.zero, .75f, delay, Tween.EaseOutStrong);
+            Tween.AnchoredPosition(bottomTransition, Vector3.zero, .75f, delay, Tween.EaseOutStrong);
+            delay += 1f;
+            Tween.AnchoredPosition(upTransition, Vector3.up * upY, .75f, delay, Tween.EaseOutStrong);
+            Tween.AnchoredPosition(bottomTransition, Vector3.up * botY, .75f, delay, Tween.EaseOutStrong);
+            /*Sequence mySequence = DOTween.Sequence();
             mySequence
                 .Append(upTransition.DOAnchorPosY(0, 1)
                     .SetEase(Ease.OutFlash))
@@ -48,13 +54,19 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                     .SetEase(Ease.InFlash))
                 .Insert(1.3f, bottomTransition.DOAnchorPosY(botY, 1)
                     .SetEase(Ease.InFlash));
-
+                    */
 
         }
 
         public void MenuTransition(Action firstOnComplete)
         {
-            Sequence mySequence = DOTween.Sequence();
+            float delay = 0;
+            Tween.AnchoredPosition(upTransition, Vector3.zero, 2, delay, Tween.EaseOutStrong);
+            Tween.AnchoredPosition(bottomTransition, Vector3.zero, 2, delay, Tween.EaseOutStrong);
+            delay += 1f;
+            Tween.AnchoredPosition(upTransition, Vector3.up * upY, 2, delay, Tween.EaseOutStrong, Tween.LoopType.None, firstOnComplete);
+            Tween.AnchoredPosition(bottomTransition, Vector3.up * botY, 2, delay, Tween.EaseOutStrong);
+            /*Sequence mySequence = DOTween.Sequence();
             mySequence
                 .Append(upTransition.DOAnchorPosY(0, 1)
                     .SetEase(Ease.OutFlash))
@@ -65,12 +77,18 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                 .Append(upTransition.DOAnchorPosY(upY, 1)
                     .SetEase(Ease.InFlash))
                 .Insert(1.3f, bottomTransition.DOAnchorPosY(botY, 1)
-                    .SetEase(Ease.InFlash));
+                    .SetEase(Ease.InFlash));*/
         }
 
         public void MenuTransition(Action firstOnComplete, Action secondOnComplete)
         {
-            Sequence mySequence = DOTween.Sequence();
+            float delay = 0;
+            Tween.AnchoredPosition(upTransition, Vector3.zero, 2, delay, Tween.EaseOutStrong);
+            Tween.AnchoredPosition(bottomTransition, Vector3.zero, 2, delay, Tween.EaseOutStrong);
+            delay += 2f;
+            Tween.AnchoredPosition(upTransition, Vector3.up * upY, 2, delay, Tween.EaseOutStrong, Tween.LoopType.None, firstOnComplete);
+            Tween.AnchoredPosition(bottomTransition, Vector3.up * botY, 2, delay, Tween.EaseOutStrong, Tween.LoopType.None, secondOnComplete);
+            /*Sequence mySequence = DOTween.Sequence();
             mySequence
                 .Append(upTransition.DOAnchorPosY(0, 1)
                     .SetEase(Ease.OutFlash))
@@ -82,12 +100,17 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                     .SetEase(Ease.InFlash))
                 .Insert(1.3f, bottomTransition.DOAnchorPosY(botY, 1)
                     .OnComplete(() => OnComplete(secondOnComplete))
-                    .SetEase(Ease.InFlash));
-        }*/
+                    .SetEase(Ease.InFlash));*/
+        }
 
         protected void OnComplete(Action action)
         {
             action();
+        }
+
+        protected void ActionVoid()
+        {
+            Debug.Log("sdjfdsnf");
         }
 
         private void OnDestroy(){

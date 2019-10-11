@@ -5,6 +5,7 @@
 
 using System;
 using Com.JellyOwl.ThiefFight.Managers;
+using Pixelplacement;
 //using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -41,16 +42,17 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         override protected void Start()
         {
             base.Start();
-            //DOTween.Init();
             eventSystem.SetSelectedGameObject(bestOfThievesBtn.gameObject);
-            //TransitionSpawn();
+            TransitionSpawn();
         }
 
-        /*private void TransitionSpawn()
+        private void TransitionSpawn()
         {
+            float delay = 0;
             GetComponent<RectTransform>().anchoredPosition += new Vector2(GetComponent<RectTransform>().rect.width, 0);
-            GetComponent<RectTransform>().DOAnchorPosX(0, 1).SetEase(Ease.InOutBack);
-        }*/
+            Tween.AnchoredPosition(GetComponent<RectTransform>(), Vector3.right * 0, 1f, delay, Tween.EaseInOutBack, Tween.LoopType.None);
+
+        }
         private void Update()
         {
             if (eventSystem.currentSelectedGameObject == null)
@@ -62,16 +64,14 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         public void BestOfThieves()
         {
             GameManager.Instance.mode = "BestOfThieves";
-            //TransitionManager.Instance.MenuTransition(BestOfThiefTransition);
-            BestOfThiefTransition();
+            TransitionManager.Instance.MenuTransition(BestOfThiefTransition);
         }
 
         public void DeathMatch()
         {
 
             GameManager.Instance.mode = "DeathMatch";
-            //TransitionManager.Instance.MenuTransition(DeathMatchTransition);
-            DeathMatchTransition();
+            TransitionManager.Instance.MenuTransition(DeathMatchTransition);
         }
 
         public void BestOfThiefTransition()
@@ -88,7 +88,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
         public void Back()
         {
-            //TransitionManager.Instance.MenuTransition(BackMenu);
+            TransitionManager.Instance.MenuTransition(BackMenu);
             BackMenu();
         }
 
