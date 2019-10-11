@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 using Com.JellyOwl.ThiefFight.Managers;
+using Pixelplacement;
 //using DG.Tweening;
 using System;
 using UnityEngine;
@@ -37,7 +38,6 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         {
             base.Start();
             eventSystem.SetSelectedGameObject(fourPlayer.gameObject);
-            //DOTween.Init();
         }
 
         private void Update()
@@ -51,8 +51,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         public void ThreePlayer()
         {
             GameManager.Instance.NumberOfPlayerMax = 3;
-            //LeftTransition(Mode);
-            Mode();
+            LeftTransition(Mode);
             MenuManager.Instance.GoToCouchPartyMode();
 
         }
@@ -61,8 +60,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         {
             
             GameManager.Instance.NumberOfPlayerMax = 2;
-            //LeftTransition(Mode);
-            Mode();
+            LeftTransition(Mode);
             MenuManager.Instance.GoToCouchPartyMode();
 
         }
@@ -75,17 +73,17 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         public void FourPlayer()
         {
             GameManager.Instance.NumberOfPlayerMax = 4;
-            //LeftTransition(Mode);
+            LeftTransition(Mode);
             Mode();
             MenuManager.Instance.GoToCouchPartyMode();
 
         }
 
-        /*public void Back()
+        public void Back()
         {
             TransitionManager.Instance.MenuTransition(BackMenu);
 
-        }*/
+        }
 
         public void BackMenu()
         {
@@ -93,12 +91,11 @@ namespace Com.JellyOwl.ThiefFight.Menus {
             MenuManager.Instance.GoToMenu();
         }
 
-        /*public void LeftTransition(Action action)
+        public void LeftTransition(Action action)
         {
-            GetComponent<RectTransform>().DOAnchorPosX(- GetComponent<RectTransform>().rect.width, 1)
-                .OnComplete(() => action())
-                .SetEase(Ease.InOutBack);
-        }*/
+            float delay = 0;
+            Tween.AnchoredPosition(GetComponent<RectTransform>(), Vector3.right * -GetComponent<RectTransform>().rect.width, 1f, delay, Tween.EaseInOutBack, Tween.LoopType.None, null, () => action());
+        }
 
         private void OnDestroy(){
 			if (this == instance) instance = null;

@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Com.JellyOwl.ThiefFight {
 
-    public class Controller :MonoBehaviour
+    public class Controller
     {
         public KeyCode a;
         public KeyCode b;

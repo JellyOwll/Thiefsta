@@ -15,7 +15,6 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
 		virtual protected void Start () {
             AddController();
-            
         }
 
         protected void AddController()
