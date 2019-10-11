@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 //using DG.Tweening;
+using Com.JellyOwl.ThiefFight.PlayerObject;
 using Pixelplacement;
 using System;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         protected RectTransform bottomTransition;
         [SerializeField]
         protected RectTransform upTransition;
+        [SerializeField]
+        protected Transform winnerMask;
 
         protected float upY;
         protected float botY;
@@ -88,26 +91,16 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             delay += 2f;
             Tween.AnchoredPosition(upTransition, Vector3.up * upY, 2, delay, Tween.EaseOutStrong, Tween.LoopType.None, firstOnComplete);
             Tween.AnchoredPosition(bottomTransition, Vector3.up * botY, 2, delay, Tween.EaseOutStrong, Tween.LoopType.None, secondOnComplete);
-            /*Sequence mySequence = DOTween.Sequence();
-            mySequence
-                .Append(upTransition.DOAnchorPosY(0, 1)
-                    .SetEase(Ease.OutFlash))
-                .Insert(0, bottomTransition.DOAnchorPosY(0, 1)
-                    .OnComplete(() => OnComplete(firstOnComplete))
-                    .SetEase(Ease.OutFlash))
-                .AppendInterval(0.3f)
-                .Append(upTransition.DOAnchorPosY(upY, 1)
-                    .SetEase(Ease.InFlash))
-                .Insert(1.3f, bottomTransition.DOAnchorPosY(botY, 1)
-                    .OnComplete(() => OnComplete(secondOnComplete))
-                    .SetEase(Ease.InFlash));*/
         }
 
-        protected void OnComplete(Action action)
+
+        public void TransitionWinner()
         {
-            action();
+            Vector3 playerPosition = Player.playersList[GameManager.Instance.playerNumberWin].transform.position;
+            playerPosition = Camera.main.WorldToViewportPoint(playerPosition);
+            winnerMask.position = playerPosition;
+            Tween.LocalScale(winnerMask, new Vector3(2, 2, 1), 2, 0);
         }
-
         protected void ActionVoid()
         {
             Debug.Log("sdjfdsnf");
