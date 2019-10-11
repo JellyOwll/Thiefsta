@@ -3,7 +3,7 @@
 ///   Date   : 14/06/2019 12:17
 ///-----------------------------------------------------------------
 
-using Com.Sabattie.Theo.ScriptTemplateSettings;
+using Com.Sabattie.Theo.ScriptTemplateSettings; 
 using System;
 using UnityEditor;
 
