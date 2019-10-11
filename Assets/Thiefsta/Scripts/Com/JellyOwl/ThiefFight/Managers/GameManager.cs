@@ -73,6 +73,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         public bool gameStart;
         protected bool pause = false;
         protected bool importantObjectiveSpawned;
+        public int playerNumberWin = 0;
 
         [Space]
         [Header("HUB")]
@@ -141,7 +142,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             }
         }
 
-
+        
         //----StartGameMode----
 
         public void StartThiefGameMode()
@@ -465,38 +466,40 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             lFinalScore.Sort();
             if(lFinalScore[lFinalScore.Count - 1] == scoreP1)
             {
+                playerNumberWin = 1;
                 winText += "Player 1 ";
                 ControllerManager.Instance.RumbleController(1, 0.5f);
             }
 
             if (lFinalScore[lFinalScore.Count - 1] == scoreP2 && NumberOfPlayerMax >= 2)
             {
+                playerNumberWin = 2;
                 winText += "Player 2 ";
                 ControllerManager.Instance.RumbleController(2, 0.5f);
             }
 
             if (lFinalScore[lFinalScore.Count - 1] == scoreP3 && NumberOfPlayerMax >=3)
             {
+                playerNumberWin = 3;
                 winText += "Player 3 ";
                 ControllerManager.Instance.RumbleController(3, 0.5f);
             }
 
             if (lFinalScore[lFinalScore.Count - 1] == scoreP4 && NumberOfPlayerMax >= 4)
             {
+                playerNumberWin = 4;
                 winText += "Player 4 ";
                 ControllerManager.Instance.RumbleController(4, 0.5f);
             }
             Time.timeScale =0.5f;
             WinScreen.Instance.CheckPlayerWin(winText);
-            StartCoroutine(GoBackToMenu());
+            TransitionManager.Instance.TransitionWinner(GoBackToMenu);
         }
 
-        protected IEnumerator GoBackToMenu()
+        protected void GoBackToMenu()
         {
-            yield return new WaitForSecondsRealtime(3f);
             LevelManager.Instance.GoToLevel("Menu");
             Time.timeScale = 1;
-
         }
 
         public void setSlowMotion()

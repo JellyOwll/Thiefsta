@@ -398,6 +398,7 @@ MonoBehaviour:
   scoreP3: 0
   scoreP4: 0
   gameStart: 0
+  playerNumberWin: 0
   description: 
   PlayerSpawner1: {fileID: 0}
   PlayerSpawner2: {fileID: 0}
@@ -660,3 +661,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bottomTransition: {fileID: 1652352415}
   upTransition: {fileID: 1998879722}
+  winnerMask: {fileID: 0}
