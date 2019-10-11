@@ -6,21 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SplashScreen.unity
+    path: Assets/Thiefsta/Scenes/SplashScreen.unity
     guid: 494581e83b3994f4eb9b84ca2c9ec899
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
+    path: Assets/Thiefsta/Scenes/Menu.unity
     guid: 8b9a7d49e62f99d4b86328a794470dc8
   - enabled: 1
-    path: Assets/Scenes/WaitRoom.unity
+    path: Assets/Thiefsta/Scenes/WaitRoom.unity
     guid: c2c9605f27e9e974aa2b423af1251723
   - enabled: 1
-    path: Assets/Scenes/MuseumNormal.unity
+    path: Assets/Thiefsta/Scenes/MuseumNormal.unity
     guid: ab122392547381642b5c1645eb018d71
   - enabled: 1
-    path: Assets/Scenes/Lab.unity
+    path: Assets/Thiefsta/Scenes/Lab.unity
     guid: d250e11761d8106458e6894fb9cc306c
   - enabled: 1
-    path: Assets/Scenes/Labo.unity
+    path: Assets/Thiefsta/Scenes/Labo.unity
     guid: dab57935f1010714b819c1da0f7c2b4e
   m_configObjects: {}
