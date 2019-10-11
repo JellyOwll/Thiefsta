@@ -493,16 +493,13 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             }
             Time.timeScale =0.5f;
             WinScreen.Instance.CheckPlayerWin(winText);
-            TransitionManager.Instance.TransitionWinner();
-            //StartCoroutine(GoBackToMenu());
+            TransitionManager.Instance.TransitionWinner(GoBackToMenu);
         }
 
-        protected IEnumerator GoBackToMenu()
+        protected void GoBackToMenu()
         {
-            yield return new WaitForSecondsRealtime(3f);
             LevelManager.Instance.GoToLevel("Menu");
             Time.timeScale = 1;
-
         }
 
         public void setSlowMotion()
