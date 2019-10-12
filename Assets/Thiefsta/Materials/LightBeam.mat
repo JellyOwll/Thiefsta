@@ -34,11 +34,11 @@ Material:
     m_Floats:
     - _Cutoff: 0.5
     - _Parallax: 0.0272
-    - _Shininess: 0.7
+    - _Shininess: 0.2
     m_Colors:
-    - _Color: {r: 0.9774069, g: 1, b: 0.033018887, a: 0}
+    - _Color: {r: 0.9774069, g: 1, b: 0.033018887, a: 0.015686275}
     - _Emission: {r: 0.99693394, g: 1, b: 0, a: 1}
-    - _SpecColor: {r: 1, g: 0.94244474, b: 0, a: 0}
+    - _SpecColor: {r: 1, g: 0.94244474, b: 0, a: 1}
 --- !u!1002 &2100001
 EditorExtensionImpl:
   serializedVersion: 6
