@@ -18,6 +18,8 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         protected RectTransform bottomTransition;
         [SerializeField]
         protected RectTransform upTransition;
+        [SerializeField]
+        protected RectTransform circleTransition;
 
         protected float upY;
         protected float botY;
@@ -91,6 +93,24 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             delay += .5f;
             Tween.AnchoredPosition(upTransition, Vector3.up * upY, 2, delay, Tween.EaseOutStrong, Tween.LoopType.None, firstOnComplete);
             Tween.AnchoredPosition(bottomTransition, Vector3.up * botY, .75f, delay, Tween.EaseOutStrong);
+        }
+
+        public void TransitionToGame()
+        {
+            float delay = 0;
+            Tween.LocalScale(circleTransition, new Vector3(10, 10), 1f, delay, Tween.EaseOutStrong);
+            delay += 1.5f;
+            Tween.AnchoredPosition(circleTransition, Vector3.zero, 0f, delay, Tween.EaseOutStrong, Tween.LoopType.None);
+            delay += 0.2f;
+            Tween.LocalScale(circleTransition, new Vector3(0, 0), 1f, delay, Tween.EaseOutStrong, Tween.LoopType.None);
+        }
+
+        public void TransitionToGame(Action firstOnComplete)
+        {
+            float delay = 0;
+            Tween.LocalScale(circleTransition, new Vector3(10, 10), 1f, delay, Tween.EaseOutStrong);
+            delay += 1.2f;
+            Tween.LocalScale(circleTransition, new Vector3(0, 0), 1f, delay, Tween.EaseInBack, Tween.LoopType.None, firstOnComplete);
         }
 
         protected void ActionVoid()

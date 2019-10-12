@@ -34,8 +34,11 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
         public void OnSettings()
         {
-            ResetEventSystem();
-            Destroy(gameObject);
+            TransitionManager.Instance.TransitionToGame(Settings);
+        }
+        protected void Settings()
+        {
+            GoTo();
             MenuManager.Instance.GoToSettings();
         }
 
@@ -57,11 +60,21 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
         public void OnBack()
         {
-            ResetEventSystem();
-            Destroy(gameObject);
-            MenuManager.Instance.GoToMenu();
+            TransitionManager.Instance.MenuTransition(Menu);
         }
 
+        protected void Menu()
+        {
+            GoTo();
+            MenuManager.Instance.GoToMenu();
+
+        }
+
+        protected void GoTo()
+        {
+            ResetEventSystem();
+            Destroy(gameObject);
+        }
         private void Update()
         {
             if (eventSystem.currentSelectedGameObject == null)

@@ -34,8 +34,8 @@ namespace Com.JellyOwl.ThiefFight.ObjectiveObject {
 
         public static void ChooseObjective()
         {
-            int lIndex = Random.Range(0, Objective.objectives.Count);
-            currentObjective = Objective.objectives[lIndex].GetComponent<Objective>();
+            int index = Random.Range(0, objectives.Count-1);
+            currentObjective = Objective.objectives[index].GetComponent<Objective>();
             currentObjective.CheckIsObjective(true);
             instance.StartCoroutine(CameraSwitch());
         }
