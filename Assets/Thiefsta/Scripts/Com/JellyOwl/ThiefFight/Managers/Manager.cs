@@ -21,13 +21,5 @@ namespace Com.JellyOwl.ThiefFight.Managers {
 
             DontDestroyOnLoad(this.gameObject);
         }
-
-        private void Start () {
-           
-        }
-		
-		private void Update () {
-			
-		}
 	}
 }

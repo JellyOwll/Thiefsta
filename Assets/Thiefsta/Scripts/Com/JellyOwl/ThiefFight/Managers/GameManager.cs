@@ -415,24 +415,26 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             {
                 gameStart = false;
                 TransitionManager.Instance.TransitionToGame(GoToLevel);
-                //SetModeVoid();
+                SetManagerVoid();
+                CheckMode();
             }
         }
 
         protected override void ManagerWin()
         {
-            
+
         }
 
         protected void GoToLevel()
         {
+            Debug.Log("Menu");
             LevelManager.Instance.GoToLevel(level);
         }
 
         public void CheckWinner()
         {
             List<int> lFinalScore = new List<int>();
-            winText = null;
+            winText = "";
             lFinalScore.Add(scoreP1);
             lFinalScore.Add(scoreP2);
             lFinalScore.Add(scoreP3);
@@ -465,7 +467,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                 winText += "Player 4 ";
                 ControllerManager.Instance.RumbleController(4, 0.5f);
             }
-            Time.timeScale =0.5f;
+            Time.timeScale = 0.5f;
             WinScreen.Instance.CheckPlayerWin(winText);
             TransitionManager.Instance.TransitionWinner(GoBackToMenu);
         }

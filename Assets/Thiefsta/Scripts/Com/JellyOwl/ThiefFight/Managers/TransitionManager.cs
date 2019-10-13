@@ -99,23 +99,16 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         {
             float delay = 0;
             Tween.LocalScale(circleTransition, new Vector3(10, 10), 1f, delay, Tween.EaseOutStrong);
-            delay += 1.5f;
-            Tween.AnchoredPosition(circleTransition, Vector3.zero, 0f, delay, Tween.EaseOutStrong, Tween.LoopType.None);
-            delay += 0.2f;
-            Tween.LocalScale(circleTransition, new Vector3(0, 0), 1f, delay, Tween.EaseOutStrong, Tween.LoopType.None);
+            delay += 1.2f;
+            Tween.LocalScale(circleTransition, new Vector3(0, 0), 1f, delay, Tween.EaseInBack, Tween.LoopType.None);
         }
 
         public void TransitionToGame(Action firstOnComplete)
         {
             float delay = 0;
-            Tween.LocalScale(circleTransition, new Vector3(10, 10), 1f, delay, Tween.EaseOutStrong);
+            Tween.LocalScale(circleTransition, new Vector3(10, 10), 1f, delay, Tween.EaseOutStrong, Tween.LoopType.None, () => { Debug.Log("Begin"); }, ()=> { Debug.Log("Coucou"); });
             delay += 1.2f;
             Tween.LocalScale(circleTransition, new Vector3(0, 0), 1f, delay, Tween.EaseInBack, Tween.LoopType.None, firstOnComplete);
-        }
-
-        protected void ActionVoid()
-        {
-            Debug.Log("sdjfdsnf");
         }
 
         private void OnDestroy(){
