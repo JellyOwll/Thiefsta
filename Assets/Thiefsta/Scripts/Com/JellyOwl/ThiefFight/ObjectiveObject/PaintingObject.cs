@@ -14,12 +14,9 @@ namespace Com.JellyOwl.ThiefFight.ObjectiveObject {
             base.Start();
             rb.isKinematic = true;
             float lIndex = Mathf.Round(Random.Range(0f, 2f));
-            Debug.Log(lIndex);
             GameObject image = Resources.Load<GameObject>("Sprites/" + lIndex);
-            Debug.Log(image);
             if (!(image is null))
             {
-                Debug.Log("Ok");
                 image = Instantiate(image, imageSpawner.transform);
                 image.transform.localPosition = Vector3.zero;
             }

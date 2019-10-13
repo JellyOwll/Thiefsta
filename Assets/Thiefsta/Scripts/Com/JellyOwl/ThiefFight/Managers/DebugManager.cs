@@ -31,7 +31,6 @@ namespace Com.JellyOwl.ThiefFight.Managers {
 		private void Update () {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                Debug.Log("Menu");
                 LevelManager.Instance.GoToLevel("Menu");
             }
 

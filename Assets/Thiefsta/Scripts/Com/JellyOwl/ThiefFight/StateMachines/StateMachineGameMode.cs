@@ -12,11 +12,18 @@ namespace Com.JellyOwl.ThiefFight.StateMachine
         protected Action DoMode;
         protected abstract void DoModeBestOfThief();
         protected abstract void DoModeDeathMatch();
-        protected abstract void DoModeVoid();
+        
+        protected abstract void DoModeElimination();
+        virtual protected void SetModeBestOfThief() => DoMode = DoModeBestOfThief;
+        virtual protected void SetModeDeathMatch() => DoMode = DoModeDeathMatch;
+        virtual protected void SetModeVoid() => DoMode = DoModeVoid;
+        virtual protected void SetModeElimination() => DoMode = DoModeElimination;
 
-        protected void SetModeBestOfThief() => DoMode = DoModeBestOfThief;
-        protected void SetModeDeathMatch() => DoMode = DoModeDeathMatch;
-        protected void SetModeVoid() => DoMode = DoModeVoid;
+        public override void Start()
+        {
+            base.Start();
+            SetModeVoid();
+        }
 
         protected override void Update()
         {
@@ -24,6 +31,11 @@ namespace Com.JellyOwl.ThiefFight.StateMachine
             DoMode();
         }
 
-        
+        protected void DoModeVoid()
+        {
+
+        }
+
+
     }
 }

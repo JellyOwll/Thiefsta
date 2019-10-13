@@ -64,26 +64,22 @@ namespace Com.JellyOwl.ThiefFight.Menus {
         public void BestOfThieves()
         {
             GameManager.Instance.mode = "BestOfThieves";
-            TransitionManager.Instance.MenuTransition(BestOfThiefTransition);
+            GameManager.Instance.level = "MuseumNormal";
+            TransitionManager.Instance.MenuTransition(Transition);
         }
 
         public void DeathMatch()
         {
 
             GameManager.Instance.mode = "DeathMatch";
-            TransitionManager.Instance.MenuTransition(DeathMatchTransition);
+            GameManager.Instance.level = "Lab";
+            TransitionManager.Instance.MenuTransition(Transition);
         }
 
-        public void BestOfThiefTransition()
+        public void Transition()
         {
             Destroy(gameObject);
             MenuManager.Instance.GoToMap();
-        }
-
-        public void DeathMatchTransition()
-        {
-            Destroy(gameObject);
-            MenuManager.Instance.GoToMapDeathMatch();
         }
 
         public void Back()

@@ -7,6 +7,7 @@ using Cinemachine;
 using Com.JellyOwl.ThiefFight.Menus;
 using Com.JellyOwl.ThiefFight.ObjectiveObject;
 using Com.JellyOwl.ThiefFight.PlayerObject;
+using Com.JellyOwl.ThiefFight.StateMachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
     }
 
 
-    public class GameManager : MonoBehaviour {
+    public class GameManager : StateMachineManager {
         private static GameManager instance;
         public static GameManager Instance { get { return instance; } }
 
@@ -69,7 +70,6 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         public String winText;
         public CinemachineVirtualCamera virtualCameraPlayer;
         protected float lastTimeScale;
-        protected Action DoAction;
         public int scoreP1, scoreP2, scoreP3, scoreP4;
         [HideInInspector]
         public bool gameStart;
@@ -95,20 +95,17 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             instance = this;
         }
 
-        public void Start()
+        override public void Start()
         {
+            base.Start();
             gameStart = true;
             controller = new Controller();
             if (LevelManager.Instance.CheckActiveLevel("WaitRoom"))
             {
-                SetWaitRoom();
+                SetManagerWaitRoom();
             } else if (LevelManager.Instance.CheckActiveLevel("Menu"))
             {
-                DoAction = null;
                 Reset();
-            } else if (LevelManager.Instance.CheckActiveLevel("HUB"))
-            {
-                SetHUB();
             } else
             {
                 CheckMode();
@@ -132,15 +129,23 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             if (mode == BestOfThieves.BestOfThieves.ToString())
             {
                 timeMode = (int)BestOfThieves.TIMEMODE;
-                SetThiefGameMode();
-            } else if (mode == Elimination.Elimination.ToString())
+                SetModeBestOfThief();
+                SetActionNormal();
+                SetManagerVoid();
+            } 
+            else if (mode == Elimination.Elimination.ToString())
             {
                 timeMode = (int)Elimination.TIMEMODE;
-                SetEliminationGameMode();
-            } else if (mode == DeathMatch.DeathMatch.ToString())
+                SetModeElimination();
+                SetActionNormal();
+                SetManagerVoid();
+            }
+            else if (mode == DeathMatch.DeathMatch.ToString())
             {
                 timeMode = (int)DeathMatch.TIMEMODE;
-                SetDeathMatch();
+                SetModeDeathMatch();
+                SetActionNormal();
+                SetManagerVoid();
             }
         }
 
@@ -247,7 +252,13 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             Time.timeScale = lastTimeScale;
         }
 
-        private void Update() {
+        protected override void Update()
+        {
+            base.Update();
+        }
+
+        protected override void DoActionNormal()
+        {
             if (gameStart)
             {
                 if (Input.GetKeyDown(controller.start) && !pause)
@@ -259,65 +270,52 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                     UnPause();
                 }
             }
-            if (!(DoAction is null) && !pause)
-            {
-                DoAction();
-            }
-
             Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
         }
 
         //----SetGameMode----
 
-        protected void SetThiefGameMode()
+        protected override void SetModeBestOfThief()
         {
-            DoAction = DoActionThiefGameMode;
+            base.SetModeBestOfThief();
             StartThiefGameMode();
+
         }
 
-        protected void SetEliminationGameMode()
+        protected override void SetModeElimination()
         {
-            DoAction = DoActionElimination;
+            base.SetModeElimination();
             StartEliminationGameMode();
+
         }
 
-        protected void SetDeathMatch()
+        protected override void SetModeDeathMatch()
         {
-            DoAction = DoActionDeathMatch;
+            base.SetModeDeathMatch();
             StartDeathMatchMode();
         }
 
-
-        protected void SetHUB()
+        protected override void SetManagerWaitRoom()
         {
-            Controller.checkController();
-            DoAction = DoActionHUB;
-        }
-
-        protected void SetWaitRoom()
-        {
+            base.SetManagerWaitRoom();
             for (int i = Player.playersList.Count - 1; i >= 0; i--)
             {
                 Player.playersList[i].SetModeNormal();
             }
             timeMode = (int)WaitRoom.TIMEMODE;
             gameStart = true;
-            DoAction = DoActionWaitRoom;
         }
 
-        protected void SetModeVoid()
+        protected override void SetManagerWin()
         {
-            DoAction = DoActionVoid;
-        }
-
-        protected void SetModeWinner()
-        {
-            DoAction = DoActionWinner;
+            base.SetManagerWin();
             gameStart = false;
+
         }
 
         //----DoActionGameMode----
-        protected void DoActionElimination()
+        protected override void DoModeElimination()
         {
             if (gameStart)
             {
@@ -326,12 +324,12 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                 if (timeMode <= 0)
                 {
                     CheckWinner();
-                    SetModeWinner();
+                    SetManagerWin();
                 }
             }
         }
 
-        protected void DoActionDeathMatch()
+        protected override void DoModeDeathMatch()
         {
             if (gameStart)
             {
@@ -340,12 +338,12 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                 if (timeMode <= 0)
                 {
                     CheckWinner();
-                    SetModeWinner();
+                    SetManagerWin();
                 }
             }
         }
 
-        protected void DoActionThiefGameMode()
+        protected override void DoModeBestOfThief()
         {
             if (gameStart)
             {
@@ -354,43 +352,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                 if (timeMode <= 0)
                 {
                     CheckWinner();
-                    SetModeWinner();
-                }
-
-                /*if(Mathf.Round(timeMode) == 45 && !importantObjectiveSpawned)
-                {
-                    importantObjectiveSpawned = true;
-                    GameObject[] spawnerObjectives = GameObject.FindGameObjectsWithTag("ImportantObjectiveSpawner");
-                    foreach (GameObject item in spawnerObjectives)
-                    {
-                        Objective.currentObjective.isObjective = false;
-                        Objective.currentObjective.CheckIsObjective(false);
-                        item.GetComponent<SpawnerImportantObjective>().SpawnImportantObjective();
-                    }
-                    Debug.Log("SpawnImportantObjective");
-                }*/
-                /*Debug.Log(Camera.main.transform.position.y);
-                if (Camera.main.transform.position.y >= 227.7641f)
-                {
-                    HUD.Instance.CamSpawn();
-                }
-                else
-                {
-                    HUD.Instance.CamRemove();
-
-                }*/
-            }
-        }
-
-
-        protected void DoActionHUB()
-        {
-            for (int i = Controller.joystickList.Length - 1; i >= 0; i--)
-            {
-                Controller lController = new Controller(i + 1);
-                if (Input.GetKeyDown(lController.start)) {
-                    Debug.Log("Controller " + i + ": Start");
-                    SpawnPlayer(i + 1);
+                    SetManagerWin();
                 }
             }
         }
@@ -441,13 +403,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             }
         }
 
-
-        protected void DoActionWinner()
-        {
-
-        }
-
-        protected void DoActionWaitRoom()
+        protected override void ManagerWaitRoom()
         {
             for (int i = Player.playersList.Count - 1; i >= 0; i--)
             {
@@ -458,14 +414,14 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             if (timeMode <= 0)
             {
                 gameStart = false;
-                SetModeVoid();
                 TransitionManager.Instance.TransitionToGame(GoToLevel);
+                //SetModeVoid();
             }
         }
 
-        protected void DoActionVoid()
+        protected override void ManagerWin()
         {
-
+            
         }
 
         protected void GoToLevel()
@@ -520,17 +476,17 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             Time.timeScale = 1;
         }
 
-        public void setSlowMotion()
+        public void SetSlowMotion()
         {
             StartCoroutine(SlowMotion(0.25f, 0.35f));
         }
 
-        public void setSlowMotion(float timeScale)
+        public void SetSlowMotion(float timeScale)
         {
             StartCoroutine(SlowMotion(timeScale, 0.5f));
         }
 
-        public void setSlowMotion(float timeScale,float time)
+        public void SetSlowMotion(float timeScale,float time)
         {
             StartCoroutine(SlowMotion(timeScale, time));
         }

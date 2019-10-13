@@ -52,7 +52,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             {
                 if (objective.GetComponent<Objective>().isObjective)
                 {
-                    GameManager.Instance.setSlowMotion();
+                    GameManager.Instance.SetSlowMotion();
                 }
             }
             particleExplosion.Play();

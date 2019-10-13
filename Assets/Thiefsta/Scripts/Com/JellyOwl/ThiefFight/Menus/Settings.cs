@@ -13,11 +13,11 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 		public static Settings Instance { get { return instance; } }
 
         [SerializeField]
-        TMP_Dropdown dropdownResolution;
+        protected TMP_Dropdown dropdownResolution;
         [SerializeField]
-        Toggle toggleFullscreen;
+        protected Toggle toggleFullscreen;
         [SerializeField]
-        TMP_Dropdown dropdownGraphics;
+        protected TMP_Dropdown dropdownGraphics;
         protected bool isFullscreen = true;
 
         private void Awake(){

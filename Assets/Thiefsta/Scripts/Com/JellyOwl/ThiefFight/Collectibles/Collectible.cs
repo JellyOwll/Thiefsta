@@ -41,7 +41,6 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
                         else if (LastPlayer == 2)
                         {
                             GameManager.Instance.scoreP2++;
-
                         }
                         else if (LastPlayer == 3)
                         {
@@ -51,7 +50,7 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
                         else if (LastPlayer == 4) {
                             GameManager.Instance.scoreP4++;
                         }
-                        HUD.Instance.updateScore();
+                        HUD.Instance?.updateScore();
                     }
                     else
                     {

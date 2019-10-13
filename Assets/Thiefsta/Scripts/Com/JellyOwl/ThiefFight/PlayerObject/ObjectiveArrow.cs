@@ -38,12 +38,9 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             if (GameManager.Instance.mode == BestOfThieves.BestOfThieves.ToString())
             {
                 arrowGraphic.enabled = true;
-                Debug.Log("Best");
             } else
             {
                 arrowGraphic.enabled = false;
-                Debug.Log("No");
-                
             }
         }
 
@@ -52,7 +49,6 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             if (Objective.currentObjective is null)
             {
                 arrowGraphic.enabled = false;
-
             }
             else
             {

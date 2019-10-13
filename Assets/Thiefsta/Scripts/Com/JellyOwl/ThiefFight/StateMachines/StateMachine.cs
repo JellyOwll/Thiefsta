@@ -11,16 +11,20 @@ namespace Com.JellyOwl.ThiefFight.StateMachine {
     {
 
         protected Action DoAction;
-        protected abstract void DoActionVoid();
         protected abstract void DoActionNormal();
+        virtual protected void SetActionNormal() => DoAction = DoActionNormal;
+        virtual protected void SetActionVoid() => DoAction = DoActionVoid;
+        protected virtual void Update() => DoAction();
 
-        protected virtual void Start()
+        public virtual void Start()
         {
             SetActionVoid();
         }
 
-        protected virtual void Update() => DoAction();
-        protected void SetActionNormal() => DoAction = DoActionNormal;
-        protected void SetActionVoid() => DoAction = DoActionVoid;
+        protected void DoActionVoid()
+        {
+
+        }
+        
     }
 }
