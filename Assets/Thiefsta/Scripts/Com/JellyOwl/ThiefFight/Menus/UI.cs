@@ -19,7 +19,7 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
         protected void AddController()
         {
-            Controller lController = new Controller(1);
+            Controller lController = new Controller();
             eventSystem = GameObject.FindGameObjectWithTag("EventSystem").GetComponent<EventSystem>();
             inputModule = eventSystem.GetComponent<StandaloneInputModule>();
             if (lController.isPs4)
@@ -34,10 +34,6 @@ namespace Com.JellyOwl.ThiefFight.Menus {
                 inputModule.cancelButton = "XboxCancel";
             }
         }
-
-        private void Update () {
-			
-		}
 
         protected void ResetEventSystem()
         {
