@@ -119,6 +119,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             gameStart = false;
             pause = false;
             NumberOfPlayerMax = 0;
+            Objective.currentObjective = null;
         }
 
         private void CheckMode()
@@ -219,10 +220,6 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             HUD.Instance.checkNumberOfPlayerHUD(NumberOfPlayerMax);
             HUD.Instance.updateScore();
             HUD.Instance.startText.enabled = false;
-            for (int i = Player.playersList.Count - 1; i >= 0; i--)
-            {
-                Player.playersList[i].SetModeNormal();
-            }
             ObjectiveByGameMode();
         }
 
@@ -299,10 +296,6 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         protected override void SetManagerWaitRoom()
         {
             base.SetManagerWaitRoom();
-            for (int i = Player.playersList.Count - 1; i >= 0; i--)
-            {
-                Player.playersList[i].SetModeNormal();
-            }
             timeMode = (int)WaitRoom.TIMEMODE;
             gameStart = true;
         }
@@ -405,10 +398,6 @@ namespace Com.JellyOwl.ThiefFight.Managers {
 
         protected override void ManagerWaitRoom()
         {
-            for (int i = Player.playersList.Count - 1; i >= 0; i--)
-            {
-                Player.playersList[i].SetModeNormal();
-            }
             timeMode -= Time.deltaTime;
 
             if (timeMode <= 0)
@@ -422,7 +411,6 @@ namespace Com.JellyOwl.ThiefFight.Managers {
 
         protected override void ManagerWin()
         {
-
         }
 
         protected void GoToLevel()
@@ -474,6 +462,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
 
         protected void GoBackToMenu()
         {
+            Reset();
             LevelManager.Instance.GoToLevel("Menu");
             Time.timeScale = 1;
         }

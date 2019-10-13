@@ -12,7 +12,6 @@ namespace Com.JellyOwl.ThiefFight.StateMachine
         protected Action DoMode;
         protected abstract void DoModeBestOfThief();
         protected abstract void DoModeDeathMatch();
-        
         protected abstract void DoModeElimination();
         virtual protected void SetModeBestOfThief() => DoMode = DoModeBestOfThief;
         virtual protected void SetModeDeathMatch() => DoMode = DoModeDeathMatch;

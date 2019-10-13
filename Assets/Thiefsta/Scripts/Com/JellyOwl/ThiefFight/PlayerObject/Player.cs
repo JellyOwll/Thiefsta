@@ -12,10 +12,11 @@ using Com.JellyOwl.ThiefFight.Managers;
 using Com.JellyOwl.ThiefFight.Collectibles;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Com.JellyOwl.ThiefFight.StateMachine;
 
 namespace Com.JellyOwl.ThiefFight.PlayerObject {
     [RequireComponent(typeof(Collider), typeof(Rigidbody))]
-    public class Player : MonoBehaviour
+    public class Player : StateMachineGameMode
     {
         public static List<Transform> players = new List<Transform>();
         public static List<Player> playersList = new List<Player>();
@@ -83,52 +84,31 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
         protected ObjectiveArrow objectiveArrow;
 
         // Start is called before the first frame update
-        void Start()
+        public override void Start()
         {
+            base.Start();
             rb = GetComponent<Rigidbody>();
             targetGroup = GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>();
             targetGroup.AddMember(transform, 1f, 1f);
             playersList.Add(this);
             players.Add(transform);
             isKilled = false;
-            objectiveArrow.CheckArrow();
             controller = new Controller(PlayerNumber);
+            SetActionNormal();
+            objectiveArrow.CheckArrow();
             if (GameManager.Instance.mode == DeathMatch.DeathMatch.ToString())
             {
                 SetModeDeathMatch();
             }
             else
             {
-                SetModeNormal();
+                SetModeBestOfThief();
             }
         }
 
-        private void SetModeDeathMatch()
-        {
-            doAction = DoActionDeathmatch;
-        }
+        
 
-        public void SetModeNormal()
-        {
-            doAction = DoActionNormal;
-        }
-
-        public void SetModeVoid()
-        {
-            doAction = DoActionVoid;
-        }
-
-        public void SetModeStun()
-        {
-            Drop();
-            ControllerManager.Instance.RumbleController(PlayerNumber, 0.2f);
-            particleHit.Play();
-            particleStun.Play();
-            doAction = DoActionStun;
-        }
-
-        // Update is called once per frame
-        void Update()
+        protected override void DoActionNormal()
         {
             if (GameManager.Instance.gameStart)
             {
@@ -161,21 +141,29 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             {
                 velocity = 0;
             }
-            
         }
 
-        protected void DoActionVoid()
+        public void SetModeStun()
         {
-
+            Drop();
+            ControllerManager.Instance.RumbleController(PlayerNumber, 0.2f);
+            particleHit.Play();
+            particleStun.Play();
+            doAction = DoActionStun;
         }
 
-        protected void DoActionNormal()
+        protected override void DoModeBestOfThief()
         {
             DetectVelocity();
             DetectionPickeable();
         }
 
-        protected void DoActionDeathmatch()
+        protected override void DoModeElimination()
+        {
+
+        }
+
+        protected override void DoModeDeathMatch()
         {
             DetectVelocity();
             DetectionPickeable();
@@ -190,7 +178,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             {
                 particleStun.Stop();
                 timerStun = timerStunMax;
-                SetModeNormal();
+                SetActionNormal();
             }
         }
 
