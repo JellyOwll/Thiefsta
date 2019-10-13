@@ -125,7 +125,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         private void CheckMode()
         {
             scoreP1 = scoreP2 = scoreP3 = scoreP4 = 0;
-            virtualCameraPlayer = GameObject.FindGameObjectWithTag("CMCamPlayer").GetComponent<CinemachineVirtualCamera>();
+            virtualCameraPlayer = GameObject.FindGameObjectWithTag("CMCamPlayer")?.GetComponent<CinemachineVirtualCamera>();
 
             if (mode == BestOfThieves.BestOfThieves.ToString())
             {

@@ -33,7 +33,7 @@ public class particleColorChangerMaster : MonoBehaviour {
                 {
                     var col = colorChangeList[i].colored_ParticleSystem[a].colorOverLifetime;
                     col.color = colorChangeList[i].Gradient_custom;
-                    colorChangeList[i].colored_ParticleSystem[a].playbackSpeed = Speed_custom;
+                    //colorChangeList[i].colored_ParticleSystem[a].playbackSpeed = Speed_custom;
                 }
             }
             applyChanges = false;

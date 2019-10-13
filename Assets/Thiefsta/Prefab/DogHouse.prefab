@@ -195,7 +195,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isThrow: 0
   isObjective: 0
-  score: 10
+  score: 0
   LastPlayer: 0
   virtualCamera: {fileID: 8840159919289744632}
   effect: {fileID: 4597105739089815577}

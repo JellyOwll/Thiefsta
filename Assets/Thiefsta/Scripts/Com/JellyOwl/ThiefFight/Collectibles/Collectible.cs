@@ -13,7 +13,8 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
         
         public bool isThrow = false;
         public bool isObjective = false;
-        public int score = 5;
+        [HideInInspector]
+        public int score = 0;
         public int LastPlayer;
         protected Rigidbody rb;
         virtual protected void Start () {

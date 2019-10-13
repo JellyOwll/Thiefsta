@@ -4,7 +4,7 @@ using System.Collections;
 public class Line : MonoBehaviour
 {
 
-    public GameObject gameObject;          // Reference to the second GameObject
+    public new GameObject gameObject;          // Reference to the second GameObject
     public Transform positionStart;
     private float WIDTH_HEIGHT = 0.125f;
     private LineRenderer line;              // Line Renderer
@@ -14,9 +14,11 @@ public class Line : MonoBehaviour
     void Start()
     {
         // Add a Line Renderer to the GameObject
-        line = this.GetComponent<LineRenderer>();
+        line = GetComponent<LineRenderer>();
         // Set the width of the Line Renderer
-        line.SetWidth(WIDTH_HEIGHT, WIDTH_HEIGHT);
+        line.startWidth = WIDTH_HEIGHT;
+        line.endWidth = WIDTH_HEIGHT;
+        //line.SetWidth(WIDTH_HEIGHT, WIDTH_HEIGHT);
         // Set the number of vertex fo the Line Renderer
         line.positionCount=2;
     }

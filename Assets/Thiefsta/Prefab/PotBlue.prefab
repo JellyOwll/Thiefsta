@@ -132,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isThrow: 0
   isObjective: 0
-  score: 5
+  score: 0
   LastPlayer: 0
 --- !u!114 &6327350235640924331
 MonoBehaviour:

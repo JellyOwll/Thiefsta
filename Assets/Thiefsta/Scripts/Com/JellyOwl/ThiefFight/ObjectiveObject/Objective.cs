@@ -22,6 +22,7 @@ namespace Com.JellyOwl.ThiefFight.ObjectiveObject {
 
         override protected void Start () {
             base.Start();
+            CheckIsObjective(false);
             objectives.Add(gameObject);
             virtualCamera.enabled = false;
             instance = this;
@@ -59,7 +60,7 @@ namespace Com.JellyOwl.ThiefFight.ObjectiveObject {
                 effect.GetComponent<ParticleSystem>().Play();
             } else
             {
-                score = 5;
+                score = 0;
                 effect.GetComponent<ParticleSystem>().Stop();
 
             }

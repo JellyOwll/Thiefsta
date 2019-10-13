@@ -24,7 +24,7 @@ public class projectileActorExplosion1 : MonoBehaviour {
     public float min, max;
 
     public bool swarmMissileLauncher = false;
-    int projectileSimFire = 1;
+    protected int projectileSimFire = 1;
 
 
     public bool Torque = false;
