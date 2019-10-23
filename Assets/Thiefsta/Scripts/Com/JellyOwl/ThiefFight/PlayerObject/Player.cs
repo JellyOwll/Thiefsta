@@ -83,10 +83,16 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
         [SerializeField]
         protected ObjectiveArrow objectiveArrow;
 
+        [Header("Custom")]
+        [SerializeField]
+        protected Transform customAnchor;
+        protected GameObject customOutfit;
+
         // Start is called before the first frame update
         public override void Start()
         {
             base.Start();
+            CheckOutfit();
             rb = GetComponent<Rigidbody>();
             targetGroup = GameObject.FindGameObjectWithTag("TargetGroup").GetComponent<CinemachineTargetGroup>();
             targetGroup.AddMember(transform, 1f, 1f);
@@ -106,7 +112,29 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
             }
         }
 
-        
+        private void CheckOutfit()
+        {
+            if(PlayerNumber == 1)
+            {
+                customOutfit = Resources.Load<GameObject>("Prefab/Outfit/Outfit" + GameManager.Instance.CustomIndexPlayer1);
+            }else if (PlayerNumber == 2)
+            {
+                customOutfit = Resources.Load<GameObject>("Prefab/Outfit/Outfit" + GameManager.Instance.CustomIndexPlayer2);
+            }
+            else if(PlayerNumber == 3)
+            {
+                customOutfit = Resources.Load<GameObject>("Prefab/Outfit/Outfit" + GameManager.Instance.CustomIndexPlayer3);
+            }
+            else if(PlayerNumber == 4)
+            {
+                customOutfit = Resources.Load<GameObject>("Prefab/Outfit/Outfit" + GameManager.Instance.CustomIndexPlayer4);
+            }
+            if (customOutfit)
+            {
+                customOutfit = Instantiate(customOutfit, customAnchor);
+                customAnchor.transform.localPosition = Vector3.zero;
+            }
+        }
 
         protected override void DoActionNormal()
         {

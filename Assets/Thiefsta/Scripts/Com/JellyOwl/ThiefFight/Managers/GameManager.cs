@@ -85,6 +85,22 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         [SerializeField]
         protected bool spawnedPlayer1, spawnedPlayer2, spawnedPlayer3, spawnedPlayer4;
 
+        [Header("Custom Player")]
+        [SerializeField]
+        protected int customIndexPlayer1;
+        [SerializeField]
+        protected int customIndexPlayer2;
+        [SerializeField]
+        protected int customIndexPlayer3;
+        [SerializeField]
+        protected int customIndexPlayer4;
+
+
+        public int CustomIndexPlayer1 { get => customIndexPlayer1; protected set => customIndexPlayer1 = value; }
+        public int CustomIndexPlayer2 { get => customIndexPlayer2; protected set => customIndexPlayer2 = value; }
+        public int CustomIndexPlayer3 { get => customIndexPlayer3; protected set => customIndexPlayer3 = value; }
+        public int CustomIndexPlayer4 { get => customIndexPlayer4; protected set => customIndexPlayer4 = value; }
+
 
         private void Awake() {
             if (instance) {
