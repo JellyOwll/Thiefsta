@@ -78,8 +78,8 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 
         public void Transition()
         {
+            MenuManager.Instance.GoToSelectionPlayer();
             Destroy(gameObject);
-            MenuManager.Instance.GoToMap();
         }
 
         public void Back()

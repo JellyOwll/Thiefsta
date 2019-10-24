@@ -17,6 +17,7 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         protected GameObject menu;
         protected GameObject couchParty;
         protected GameObject couchPartyMode;
+        protected GameObject playerSelection;
         protected GameObject option;
         protected GameObject settings;
         protected GameObject audioSettings;
@@ -39,17 +40,13 @@ namespace Com.JellyOwl.ThiefFight.Managers {
                 option = Resources.Load<GameObject>(Path+"Option");
                 couchParty = Resources.Load<GameObject>(Path + "CouchParty");
                 couchPartyMode = Resources.Load<GameObject>(Path + "CouchPartyMode");
+                playerSelection = Resources.Load<GameObject>(Path + "PlayerSelection");
                 audioSettings = Resources.Load<GameObject>(Path + "AudioSettings");
                 settings = Resources.Load<GameObject>(Path + "Settings");
                 screenSize = Resources.Load<GameObject>(Path + "ScreenSize");
             }
             canvas = GameObject.FindGameObjectWithTag("Canvas");
         }
-
-        private void Update () {
-			
-		}
-
         public void Quit()
         {
             #if UNITY_EDITOR
@@ -61,9 +58,14 @@ namespace Com.JellyOwl.ThiefFight.Managers {
             #endif
         }
 
-        internal void GoToMapDeathMatch()
+        public void GoToMapDeathMatch()
         {
             LevelManager.Instance.GoToLevel("Lab");
+        }
+
+        public void GoToSelectionPlayer()
+        {
+            GameObject lMenu = Instantiate(playerSelection, canvas.transform);
         }
 
         public void GoToOption()

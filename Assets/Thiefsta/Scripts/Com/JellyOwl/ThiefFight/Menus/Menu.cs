@@ -37,8 +37,8 @@ namespace Com.JellyOwl.ThiefFight.Menus {
 		override protected void Start () {
             ButtonSpawn();
             base.Start();
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            /*Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;*/
         }
 
         private void ButtonSpawn()

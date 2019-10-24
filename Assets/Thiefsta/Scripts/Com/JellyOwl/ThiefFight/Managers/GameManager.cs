@@ -96,10 +96,10 @@ namespace Com.JellyOwl.ThiefFight.Managers {
         protected int customIndexPlayer4;
 
 
-        public int CustomIndexPlayer1 { get => customIndexPlayer1; protected set => customIndexPlayer1 = value; }
-        public int CustomIndexPlayer2 { get => customIndexPlayer2; protected set => customIndexPlayer2 = value; }
-        public int CustomIndexPlayer3 { get => customIndexPlayer3; protected set => customIndexPlayer3 = value; }
-        public int CustomIndexPlayer4 { get => customIndexPlayer4; protected set => customIndexPlayer4 = value; }
+        public int CustomIndexPlayer1 { get => customIndexPlayer1; set => customIndexPlayer1 = value; }
+        public int CustomIndexPlayer2 { get => customIndexPlayer2; set => customIndexPlayer2 = value; }
+        public int CustomIndexPlayer3 { get => customIndexPlayer3; set => customIndexPlayer3 = value; }
+        public int CustomIndexPlayer4 { get => customIndexPlayer4; set => customIndexPlayer4 = value; }
 
 
         private void Awake() {
