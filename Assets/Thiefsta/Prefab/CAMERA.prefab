@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8871306803043523199}
   - component: {fileID: 8871306803043523184}
   - component: {fileID: 8871306803043523197}
-  m_Layer: 0
+  - component: {fileID: 7132552470733791272}
+  m_Layer: 9
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8871306803043523186}
-  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.08715587, y: 0, z: -0, w: 0.99619466}
   m_LocalPosition: {x: 0, y: 0.000061356994, z: 0.0000043379696}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -121,6 +122,70 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &7132552470733791272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8871306803043523186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d66045b37204fe4cb66c6914bb4dac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TriggerLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  ObstacleLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  BackgroundLayers:
+    serializedVersion: 2
+    m_Bits: 567
+  maskDownsample: 1
+  backgroundDownsample: 0
+  disabledTriggers: []
+  disabledObstacles: []
+  colorizeTriggers: 0
+  colorStrength: 0
+  coloredTriggersDefaultColor: {r: 1, g: 1, b: 1, a: 1}
+  coloredTriggers: []
+  preserveDepthTexture: 0
+  checkRenderTypes: 1
+  useTransparencyMasks: 0
+  alphaDiscard: 0.01
+  transparency: 1
+  sensitivity: 0
+  blurSpilling: 0
+  hardBlur: 1
+  HBdownsample: 1
+  HBblurSize: 5
+  HBblurIterations: 1
+  blurSmoothing: 5
+  softBlur: 0
+  SBdownsample: 1
+  SBblurSize: 4
+  SBblurIterations: 1
+  tintColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  backgroundRenderType: 0
+  noShadows: 0
+  lightsToDisable: []
+  outline: 0.001
+  hologramColorFactor: 0.5
+  effectColor: {r: 0, g: 0, b: 1, a: 1}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  replacementShader: {fileID: 0}
+  shaderTags: 
+  messageBeforeRender: 0
+  messageReciever: {fileID: 0}
+  messageMethod: STS_BeforeBackRender
+  forceForwardRenderingOnBackground: 0
+  showObscuranceMask: 0
+  showColorMask: 0
+  triggersCamera: {fileID: 0}
+  obstaclesCamera: {fileID: 0}
+  backgroundCamera: {fileID: 0}
 --- !u!1 &8871306804326412244
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,14 +210,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8871306804326412244}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.08715587, y: -0, z: -0, w: 0.99619466}
   m_LocalPosition: {x: 0, y: 0.000061356994, z: 0.0000043379696}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8871306804912578669}
   m_Father: {fileID: 8871306804763762735}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 56.211002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!114 &8871306804326412243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,7 +278,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8871306804763762720}
-  m_LocalRotation: {x: 0.4710966, y: -0, z: -0, w: 0.8820817}
+  m_LocalRotation: {x: 0.4710966, y: 0, z: 0, w: 0.8820817}
   m_LocalPosition: {x: 207.58, y: 237.3951, z: -118.01706}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -222,7 +287,7 @@ Transform:
   - {fileID: 8871306803043523198}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 56.211002, y: 0, z: 0}
 --- !u!1 &8871306804912578670
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,7 +388,7 @@ MonoBehaviour:
   m_AdjustmentMode: 2
   m_MaxDollyIn: 5000
   m_MaxDollyOut: 5000
-  m_MinimumDistance: 1
+  m_MinimumDistance: 380
   m_MaximumDistance: 5000
   m_MinimumFOV: 3
   m_MaximumFOV: 60

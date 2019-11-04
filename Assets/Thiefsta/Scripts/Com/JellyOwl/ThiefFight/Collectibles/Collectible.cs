@@ -17,12 +17,44 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
         public int score = 0;
         public int LastPlayer;
         protected Rigidbody rb;
+        protected Outline outline;
         virtual protected void Start () {
             rb = GetComponent<Rigidbody>();
-            GetComponent<Outline>().enabled = false;
+            outline = GetComponent<Outline>();
+            outline.enabled = false;
+            Player.OnDrop += Player_OnDrop;
+            Player.OnPick += Player_OnPick;
 		}
-		
-		private void Update () {
+
+        protected virtual void Player_OnPick(Player sender)
+        {
+            if(sender.CollectableObject.IndexOf(this) == 0)
+            {
+                LastPlayer = sender.PlayerNumber;
+                sender.PickedObject.Add(this);
+                rb.isKinematic = true;
+                GetComponent<Collider>().enabled = false;
+                outline.enabled = false;
+                if (isObjective)
+                {
+                    sender.slowObjective = true;
+                    sender.objectiveArrow.Followtruck = true;
+                }
+                sender.CollectableObject.Remove(this);
+            }
+        }
+
+        virtual protected void Player_OnDrop(Player sender)
+        {
+            if(LastPlayer == sender.PlayerNumber)
+            {
+                sender.PickedObject.Remove(this);
+                rb.isKinematic = false;
+                GetComponent<Collider>().enabled = true;
+            }
+        }
+
+        private void Update () {
 			
 		}
 

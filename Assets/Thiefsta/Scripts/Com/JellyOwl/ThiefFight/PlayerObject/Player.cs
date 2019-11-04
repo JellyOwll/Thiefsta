@@ -13,11 +13,15 @@ using Com.JellyOwl.ThiefFight.Collectibles;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Com.JellyOwl.ThiefFight.StateMachine;
+using UnityEngine.Events;
 
 namespace Com.JellyOwl.ThiefFight.PlayerObject {
     [RequireComponent(typeof(Collider), typeof(Rigidbody))]
+
     public class Player : StateMachineGameMode
     {
+        public delegate void PlayerEventHandler(Player sender);
+
         public static List<Transform> players = new List<Transform>();
         public static List<Player> playersList = new List<Player>();
 
@@ -27,8 +31,8 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
         protected bool isRunning = false;
         protected bool isThrowing = false;
         protected bool isPicking = false;
-        protected List<GameObject> CollectableObject = new List<GameObject>();
-        protected List<GameObject> PickedObject = new List<GameObject>();
+        public List<Collectible> CollectableObject = new List<Collectible>();
+        public List<Collectible> PickedObject = new List<Collectible>();
         
         protected Action doAction;
         protected float timerStunMax = 3;
@@ -81,12 +85,18 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
         [NonSerialized]
         public bool isKilled;
         [SerializeField]
-        protected ObjectiveArrow objectiveArrow;
+        public ObjectiveArrow objectiveArrow;
 
         [Header("Custom")]
         [SerializeField]
         protected Transform customAnchor;
         protected GameObject customOutfit;
+
+        public static event PlayerEventHandler OnThrow;
+        public static event PlayerEventHandler OnDrop;
+        public static event PlayerEventHandler OnPick;
+        public static event PlayerEventHandler OnStun;
+        public static event PlayerEventHandler OnKilled;
 
         // Start is called before the first frame update
         public override void Start()
@@ -173,6 +183,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         public void SetModeStun()
         {
+            OnStun.Invoke(this);
             Drop();
             ControllerManager.Instance.RumbleController(PlayerNumber, 0.2f);
             particleHit.Play();
@@ -242,7 +253,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
                     Throw();
                 }
             }
-            foreach (GameObject picked in PickedObject)
+            foreach (Collectible picked in PickedObject)
             {
                 picked.transform.position = launch.transform.position;
                 picked.transform.rotation = transform.rotation;
@@ -267,14 +278,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         public void Drop()
         {
-            GameObject lObject;
-            for (int i = PickedObject.Count - 1; i >= 0; i--)
-            {
-                lObject = PickedObject[i];
-                PickedObject.Remove(PickedObject[i]);
-                lObject.GetComponent<Rigidbody>().isKinematic = false;
-                lObject.GetComponent<Collider>().enabled = true;
-            }
+            OnDrop.Invoke(this);
             handfull = false;
             slowObjective = false;
             objectiveArrow.Followtruck = false;
@@ -283,34 +287,16 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         private void Pick()
         {
-            for (int i = CollectableObject.Count - 1; i >= 0; i--)
-            {
-                if (i == 0)
-                {
-                    PickedObject.Add(CollectableObject[i]);
-                    CollectableObject[i].GetComponent<Rigidbody>().isKinematic = true;
-                    CollectableObject[i].GetComponent<Collider>().enabled = false;
-                    CollectableObject[i].GetComponent<Outline>().enabled = false;
-                    if (CollectableObject[i].GetComponent<Collectible>().isObjective)
-                    {
-                        slowObjective = true;
-                        objectiveArrow.Followtruck = true;
-                    }
-                    CollectableObject[i].GetComponent<Collectible>().LastPlayer = PlayerNumber;
-                    CollectableObject.Remove(CollectableObject[i]);
-                    handfull = true;
-                    isPicking = true;
-                    break;
-                }
-
-            }
+            OnPick.Invoke(this);
+            handfull = true;
+            isPicking = true;
         }
 
         private void Throw()
         {
             for (int i = PickedObject.Count - 1; i >= 0; i--)
             {
-                GameObject lObject = PickedObject[i];
+                Collectible lObject = PickedObject[i];
                 PickedObject.Remove(PickedObject[i]);
                 lObject.transform.position = launch.transform.position;
                 lObject.GetComponent<Rigidbody>().isKinematic = false;
@@ -352,7 +338,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
         {
             if (other.CompareTag("Pickeable") && !other.GetComponent<Collectible>().isThrow)
             {
-                CollectableObject.Add(other.gameObject);
+                CollectableObject.Add(other.GetComponent<Collectible>());
             }
         }
 
@@ -368,7 +354,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
         {
             if (other.CompareTag("Pickeable"))
             {
-                CollectableObject.Remove(other.gameObject);
+                CollectableObject.Remove(other.GetComponent<Collectible>());
                 other.GetComponent<Outline>().enabled = false;
             }
         }
