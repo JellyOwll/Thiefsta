@@ -5,6 +5,7 @@
 
 using Com.JellyOwl.ThiefFight.Managers;
 using Com.JellyOwl.ThiefFight.Menus;
+using Com.JellyOwl.ThiefFight.ObjectiveObject;
 using Com.JellyOwl.ThiefFight.PlayerObject;
 using System.Collections;
 using UnityEngine;
@@ -32,15 +33,21 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
 
         private void OnTriggerStay(Collider other)
         {
-            if (!other.GetComponent<Rigidbody>().Equals(null))
+            if (other.GetComponent<Rigidbody>())
             {
-                other?.GetComponent<Rigidbody>()?.AddExplosionForce(500, transform.position, 30);
-                if (!(other.GetComponent<Player>() is null))
+                Rigidbody rb = other.GetComponent<Rigidbody>();
+                if (other.GetComponent<PaintingObject>())
                 {
-                    if (!other.GetComponent<Player>().isKilled)
+                    rb.isKinematic = false;
+                }
+                rb.AddExplosionForce(500, transform.position, 30);
+                if (other.GetComponent<Player>())
+                {
+                    Player player = other.GetComponent<Player>();
+                    if (!player.isKilled)
                     {
-                        other?.GetComponent<Player>()?.Killed();
-                        if (other.GetComponent<Player>().PlayerNumber == lastPlayer)
+                        player.Killed();
+                        if (player.PlayerNumber == lastPlayer)
                         {
 
                             switch (lastPlayer)
@@ -81,10 +88,10 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
                         Debug.Log(lastPlayer);
                     }
                 }
-                else if (!(other.GetComponent<ExplosiveCollectible>() is null))
+                else if (other.GetComponent<ExplosiveCollectible>())
                 {
 
-                    other?.GetComponent<ExplosiveCollectible>()?.Explode(lastPlayer);
+                    other.GetComponent<ExplosiveCollectible>().Explode(lastPlayer);
                 }
             }
         }

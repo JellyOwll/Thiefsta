@@ -17,6 +17,7 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
             if (isThrow)
             {
                 Explode(LastPlayer);
+                LastPlayer = 0;
             }
         }
 

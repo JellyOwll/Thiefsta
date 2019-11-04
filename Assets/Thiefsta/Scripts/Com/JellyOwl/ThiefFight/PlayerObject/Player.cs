@@ -279,7 +279,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         public void Drop()
         {
-            OnDrop.Invoke(this);
+            OnDrop?.Invoke(this);
             handfull = false;
             slowObjective = false;
             objectiveArrow.Followtruck = false;
@@ -288,14 +288,14 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         private void Pick()
         {
-            OnPick.Invoke(this);
+            OnPick?.Invoke(this);
             handfull = true;
             isPicking = true;
         }
 
         private void Throw()
         {
-            OnThrow.Invoke(this);
+            OnThrow?.Invoke(this);
             handfull = false;
             isThrowing = true;
             slowObjective = false;
@@ -320,18 +320,23 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         
 
-        private void OnTriggerEnter(Collider other)
+        /*private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<Collectible>() && !other.GetComponent<Collectible>().isThrow)
             {
                 CollectableObject.Add(other.GetComponent<Collectible>());
             }
-        }
+        }*/
 
         protected void OnTriggerStay(Collider other)
         {
+
             if (other.GetComponent<Collectible>() && !other.GetComponent<Collectible>().isThrow)
             {
+                if(!CollectableObject.Contains(other.GetComponent<Collectible>()))
+                {
+                    CollectableObject.Add(other.GetComponent<Collectible>());
+                }
                 CollectableObject = CollectableObject.OrderBy(x => Vector2.Distance(transform.position, x.transform.position)).ToList();
             }
         }
@@ -357,7 +362,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         public void Killed()
         {
-            OnKilled.Invoke(this);
+            OnKilled?.Invoke(this);
             ControllerManager.Instance.RumbleController(PlayerNumber, 0.3f);
             isKilled = true;
             Drop();

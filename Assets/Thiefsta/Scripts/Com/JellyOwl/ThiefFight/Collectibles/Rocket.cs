@@ -28,11 +28,14 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
 
         protected override void Player_OnThrow(Player sender)
         {
-            sender.PickedObject.Remove(this);
-            rb.isKinematic = false;
-            GetComponent<Collider>().enabled = true;
-            transform.position = sender.launch.transform.position;
-            isThrow = true;
+            if (LastPlayer == sender.PlayerNumber)
+            {
+                sender.PickedObject.Remove(this);
+                rb.isKinematic = false;
+                GetComponent<Collider>().enabled = true;
+                transform.position = sender.launch.transform.position;
+                isThrow = true;
+            }
         }
 
         private void Update () {

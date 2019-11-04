@@ -44,7 +44,7 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
 
         protected virtual void Player_OnPick(Player sender)
         {
-            if(sender.CollectableObject.IndexOf(this) == 0)
+            if(sender.CollectableObject.IndexOf(this) == 0 && sender.PickedObject.Count == 0)
             {
                 LastPlayer = sender.PlayerNumber;
                 sender.PickedObject.Add(this);
@@ -64,9 +64,10 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
         {
             if(LastPlayer == sender.PlayerNumber)
             {
-                sender.PickedObject.Remove(this);
                 rb.isKinematic = false;
                 GetComponent<Collider>().enabled = true;
+                sender.PickedObject.Remove(this);
+
             }
         }
 
