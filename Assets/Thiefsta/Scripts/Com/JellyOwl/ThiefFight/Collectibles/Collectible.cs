@@ -24,7 +24,23 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
             outline.enabled = false;
             Player.OnDrop += Player_OnDrop;
             Player.OnPick += Player_OnPick;
+            Player.OnThrow += Player_OnThrow;
 		}
+
+        protected virtual void Player_OnThrow(Player sender)
+        {
+            if (LastPlayer == sender.PlayerNumber)
+            {
+                sender.PickedObject.Remove(this);
+                rb.isKinematic = false;
+                GetComponent<Collider>().enabled = true;
+                transform.position = sender.launch.transform.position;
+                isThrow = true;
+                rb.AddTorque(sender.transform.right * sender.VerticalForce, ForceMode.Impulse);
+                rb.AddForce(sender.transform.forward * sender.HorizontalForce, ForceMode.Impulse);
+                rb.AddForce(sender.transform.up * sender.VerticalForce, ForceMode.Impulse);
+            }
+        }
 
         protected virtual void Player_OnPick(Player sender)
         {
@@ -60,6 +76,10 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
 
        virtual protected void OnCollisionEnter(Collision collision)
         {
+            if (isThrow)
+            {
+                LastPlayer = 0;
+            }
             if (collision.gameObject.CompareTag("Player"))
             {
                 if (isThrow)

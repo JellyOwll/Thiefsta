@@ -22,6 +22,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
     {
         public delegate void PlayerEventHandler(Player sender);
 
+        private const string explosionPath = "Prefab/Explosion/DieExplosion";
         public static List<Transform> players = new List<Transform>();
         public static List<Player> playersList = new List<Player>();
 
@@ -294,22 +295,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         private void Throw()
         {
-            for (int i = PickedObject.Count - 1; i >= 0; i--)
-            {
-                Collectible lObject = PickedObject[i];
-                PickedObject.Remove(PickedObject[i]);
-                lObject.transform.position = launch.transform.position;
-                lObject.GetComponent<Rigidbody>().isKinematic = false;
-                lObject.GetComponent<Collectible>().isThrow = true;
-                if (lObject.GetComponent<Rocket>() is null)
-                {
-                    lObject.GetComponent<Rigidbody>().AddTorque(transform.right * VerticalForce, ForceMode.Impulse);
-                    lObject.GetComponent<Rigidbody>().AddForce(transform.forward * HorizontalForce, ForceMode.Impulse);
-                    lObject.GetComponent<Rigidbody>().AddForce(transform.up * VerticalForce, ForceMode.Impulse);
-                }
-                lObject.GetComponent<Collider>().enabled = true;
-
-            }
+            OnThrow.Invoke(this);
             handfull = false;
             isThrowing = true;
             slowObjective = false;
@@ -336,7 +322,7 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Pickeable") && !other.GetComponent<Collectible>().isThrow)
+            if (other.GetComponent<Collectible>() && !other.GetComponent<Collectible>().isThrow)
             {
                 CollectableObject.Add(other.GetComponent<Collectible>());
             }
@@ -344,15 +330,14 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         protected void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Pickeable") && !other.GetComponent<Collectible>().isThrow)
+            if (other.GetComponent<Collectible>() && !other.GetComponent<Collectible>().isThrow)
             {
                 CollectableObject = CollectableObject.OrderBy(x => Vector2.Distance(transform.position, x.transform.position)).ToList();
             }
         }
-
-            private void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Pickeable"))
+            if (other.GetComponent<Collectible>())
             {
                 CollectableObject.Remove(other.GetComponent<Collectible>());
                 other.GetComponent<Outline>().enabled = false;
@@ -372,10 +357,11 @@ namespace Com.JellyOwl.ThiefFight.PlayerObject {
 
         public void Killed()
         {
+            OnKilled.Invoke(this);
             ControllerManager.Instance.RumbleController(PlayerNumber, 0.3f);
             isKilled = true;
             Drop();
-            GameObject lExplosion = Instantiate(Resources.Load<GameObject>("Prefab/Explosion/DieExplosion"));
+            GameObject lExplosion = Instantiate(Resources.Load<GameObject>(explosionPath));
             lExplosion.transform.position = transform.position;
             GameObject[] lSpawners = GameObject.FindGameObjectsWithTag("Respawn");
             foreach (GameObject spawner in lSpawners)

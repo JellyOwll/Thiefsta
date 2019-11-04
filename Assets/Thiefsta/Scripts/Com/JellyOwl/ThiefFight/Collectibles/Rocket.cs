@@ -4,6 +4,7 @@
 ///-----------------------------------------------------------------
 
 using System;
+using Com.JellyOwl.ThiefFight.PlayerObject;
 using UnityEngine;
 
 namespace Com.JellyOwl.ThiefFight.Collectibles {
@@ -23,6 +24,15 @@ namespace Com.JellyOwl.ThiefFight.Collectibles {
         private void SetModeNormal()
         {
             DoAction = DoActionNormal;
+        }
+
+        protected override void Player_OnThrow(Player sender)
+        {
+            sender.PickedObject.Remove(this);
+            rb.isKinematic = false;
+            GetComponent<Collider>().enabled = true;
+            transform.position = sender.launch.transform.position;
+            isThrow = true;
         }
 
         private void Update () {
